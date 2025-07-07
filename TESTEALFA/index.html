@@ -1,16 +1,20 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Jogo da Seta</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="container">
-    <div id="board"></div>
-    <div id="arrowContainer">⬇</div>
-    <button id="restartBtn">Reiniciar</button>
-  </div>
+  <main id="container">
+    <header>
+      <h1>Jogo da Seta</h1>
+    </header>
+    <section id="tabela" aria-label="Tabuleiro do jogo"></section>
+    <div id="containerSeta" aria-live="polite" aria-atomic="true">⬇</div>
+    <button id="botaoReiniciar" type="button">Reiniciar</button>
+  </main>
   <script src="script.js"></script>
 </body>
 </html>
