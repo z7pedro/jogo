@@ -1,212 +1,89 @@
-// const board = document.getElementById("board");
-// const restartBtn = document.getElementById("restartBtn");
-// const arrowContainer = document.getElementById("arrowContainer");
+const tabela = document.getElementById("tabela");
+const containerSeta = document.getElementById("containerSeta");
+const botaoReiniciar = document.getElementById("botaoReiniciar");
 
-// const ROWS = 6;
-// const COLS = 6;
+// configuraçoes do tabuleiro
+const LINHAS = 6;
+const COLUNAS = 6;
+let quadradosTabela = [];
+let quadradoCorreto = null;
 
-// let target = null;
-// let squares = [];
+// essa funçao cria o tabuleiro com os quadrados
+function criarTabuleiro() {
+  tabela.innerHTML = "";
+  quadradosTabela = [];
 
-// function createBoard() {
-//   board.innerHTML = "";
-//   squares = [];
-
-//   for (let i = 0; i < ROWS * COLS; i++) {
-//     const sq = document.createElement("div");
-//     sq.classList.add("square");
-//     sq.dataset.index = i;
-//   if (idx === target) {
-//     squares[idx].classList.add("correct");
-//     showArrow("");
-//     alert("Parabéns! Você ganhou!");
-//   } else {
-//     squares[idx].classList.add("wrong");
-//     showArrowDirection(idx, target);
-//   }
-// }
-
-// function showArrowDirection(fromIdx, toIdx) {
-//   const fromRow = Math.floor(fromIdx / COLS);
-//   const fromCol = fromIdx % COLS;
-//   const toRow = Math.floor(toIdx / COLS);
-//   const toCol = toIdx % COLS;
-const board = document.getElementById("board");
-// const restartBtn = document.getElementById("restartBtn");
-// const arrowContainer = document.getElementById("arrowContainer");
-
-// const ROWS = 6;
-// const COLS = 6;
-
-// let target = null;
-// let squares = [];
-
-// function createBoard() {
-//   board.innerHTML = "";
-//   squares = [];
-
-//   for (let i = 0; i < ROWS * COLS; i++) {
-//     const sq = document.createElement("div");
-//     sq.classList.add("square");
-//     sq.dataset.index = i;
-//     sq.addEventListener("click", onSquareClick);
-//     board.appendChild(sq);
-//     squares.push(sq);
-//   }
-// }
-
-// function pickTarget() {
-//   target = Math.floor(Math.random() * ROWS * COLS);
-// }
-
-// function onSquareClick(e) {
-//   const idx = parseInt(e.target.dataset.index);
-//   if (squares[idx].classList.contains("correct") || squares[idx].classList.contains("wrong")) {
-//     return;
-//   }
-
-//   if (idx === target) {
-//     squares[idx].classList.add("correct");
-//     showArrow("");
-//     alert("Parabéns! Você ganhou!");
-//   } else {
-//     squares[idx].classList.add("wrong");
-//     showArrowDirection(idx, target);
-//   }
-// }
-
-// function showArrowDirection(fromIdx, toIdx) {
-//   const fromRow = Math.floor(fromIdx / COLS);
-//   const fromCol = fromIdx % COLS;
-//   const toRow = Math.floor(toIdx / COLS);
-//   const toCol = toIdx % COLS;
-
-//   const deltaRow = toRow - fromRow;
-//   const deltaCol = toCol - fromCol;
-
-//   let arrow = "❓";
-
-//   if (deltaRow === 0 && deltaCol > 0) arrow = "→";
-//   else if (deltaRow === 0 && deltaCol < 0) arrow = "←";
-//   else if (deltaCol === 0 && deltaRow > 0) arrow = "↓";
-//   else if (deltaCol === 0 && deltaRow < 0) arrow = "↑";
-//   else if (deltaRow < 0 && deltaCol > 0) arrow = "↗";
-//   else if (deltaRow > 0 && deltaCol > 0) arrow = "↘";
-//   else if (deltaRow > 0 && deltaCol < 0) arrow = "↙";
-//   else if (deltaRow < 0 && deltaCol < 0) arrow = "↖";
-
-//   showArrow(arrow);
-// }
-
-// function showArrow(arrowSymbol) {
-//   arrowContainer.textContent = arrowSymbol;
-// }
-
-// function restartGame() {
-//   showArrow("");
-//   createBoard();
-//   pickTarget();
-// }
-
-// restartBtn.addEventListener("click", restartGame);
-
-// restartGame();
-
-//   const deltaRow = toRow - fromRow;
-//   const deltaCol = toCol - fromCol;
-
-//   let arrow = "❓";
-
-//   if (deltaRow === 0 && deltaCol > 0) arrow = "→";
-//   else if (deltaRow === 0 && deltaCol < 0) arrow = "←";
-//   else if (deltaCol === 0 && deltaRow > 0) arrow = "↓";
-//   else if (deltaCol === 0 && deltaRow < 0) arrow = "↑";
-//   else if (deltaRow < 0 && deltaCol > 0) arrow = "↗";
-//   else if (deltaRow > 0 && deltaCol > 0) arrow = "↘";
-//   else if (deltaRow > 0 && deltaCol < 0) arrow = "↙";
-//   else if (deltaRow < 0 && deltaCol < 0) arrow = "↖";
-
-//   showArrow(arrow);
-// }
-
-// function showArrow(arrowSymbol) {
-//   arrowContainer.textContent = arrowSymbol;
-// }
-
-// function restartGame() {
-//   showArrow("");
-//   createBoard();
-//   pickTarget();
-// }
-
-// restartBtn.addEventListener("click", restartGame);
-
-// restartGame();
-
-
-
-
-
-
-
-
-
-const board = document.getElementById("board");
-const arrowContainer = document.getElementById("arrowContainer");
-const restartBtn = document.getElementById("restartBtn");
-
-const ROWS = 6;
-const COLS = 6;
-let target = 0;
-
-function createBoard() {
-  board.innerHTML = "";
-  for (let i = 0; i < ROWS * COLS; i++) {
-    const div = document.createElement("div");
-    div.className = "square";
-    div.dataset.index = i;
-    div.onclick = handleClick;
-    board.appendChild(div);
+  for (let i = 0; i < LINHAS * COLUNAS; i++) {
+    const quadrado = document.createElement("div");
+    quadrado.className = "quadrado";
+    quadrado.setAttribute("data-index", i);
+    quadrado.addEventListener("click", cliqueNoQuadrado);
+    tabela.appendChild(quadrado);
+    quadradosTabela.push(quadrado);
   }
 }
 
-function handleClick(e) {
-  const index = +e.target.dataset.index;
-  const square = e.target;
+// escolhe um quadrado correto aleatoriamente
+function escolherQuadradoCorreto() {
+  quadradoCorreto = Math.floor(Math.random() * LINHAS * COLUNAS);
+}
 
-  if (square.classList.contains("correct") || square.classList.contains("wrong")) return;
+// evento que acontece quando clica no quadrado (correto)
+function cliqueNoQuadrado(event) {
+  const quadrado = event.currentTarget;
+  const indice = parseInt(quadrado.getAttribute("data-index"));
 
-  if (index === target) {
-    square.classList.add("correct");
-    arrowContainer.textContent = "";
-    alert("Parabéns! Você ganhou!");
+  // ignora se ja foi clicado antes
+  if (quadrado.classList.contains("correto") || quadrado.classList.contains("errado")) return;
+
+  if (indice === quadradoCorreto) {
+    quadrado.classList.add("correto");
+    mostrarSeta("");
+    alert("Parabéns! Você encontrou!");
   } else {
-    square.classList.add("wrong");
-    showArrow(index, target);
+    quadrado.classList.add("errado");
+    mostrarSetaDirecao(indice, quadradoCorreto);
   }
 }
 
-function showArrow(from, to) {
-  const [fr, fc] = [Math.floor(from / COLS), from % COLS];
-  const [tr, tc] = [Math.floor(to / COLS), to % COLS];
-  const dr = tr - fr, dc = tc - fc;
+// calcula a direçao do quadrado correto em relacao a origem onde foi clicado, e mostra a seta correspondente
+function mostrarSetaDirecao(origem, destino) {
+  var linhaOrigem = Math.floor(origem / COLUNAS);
+  var colunaOrigem = origem % COLUNAS;
+  var linhaDestino = Math.floor(destino / COLUNAS);
+  var colunaDestino = destino % COLUNAS;
 
-  const directions = {
-    "0,1": "→",  "0,-1": "←",
-    "1,0": "↓",  "-1,0": "↑",
-    "-1,1": "↗", "1,1": "↘",
-    "1,-1": "↙","-1,-1": "↖"
-  };
+  var diferencaLinha = linhaDestino - linhaOrigem;
+  var diferencaColuna = colunaDestino - colunaOrigem;
 
-  const key = `${Math.sign(dr)},${Math.sign(dc)}`;
-  arrowContainer.textContent = directions[key] || "";
+  var seta = "❓";
+
+  if (diferencaLinha === 0 && diferencaColuna > 0) seta = "→";
+  else if (diferencaLinha === 0 && diferencaColuna < 0) seta = "←";
+  else if (diferencaColuna === 0 && diferencaLinha > 0) seta = "↓";
+  else if (diferencaColuna === 0 && diferencaLinha < 0) seta = "↑";
+  else if (diferencaLinha < 0 && diferencaColuna > 0) seta = "↗";
+  else if (diferencaLinha > 0 && diferencaColuna > 0) seta = "↘";
+  else if (diferencaLinha > 0 && diferencaColuna < 0) seta = "↙";
+  else if (diferencaLinha < 0 && diferencaColuna < 0) seta = "↖";
+
+  mostrarSeta(seta);
+}
+  
+// atualiza o container que mostra a seta
+function mostrarSeta(simbolo) {
+  containerSeta.textContent = simbolo;
 }
 
-function restartGame() {
-  createBoard();
-  arrowContainer.textContent = "";
-  target = Math.floor(Math.random() * ROWS * COLS);
+// reinicia o jogo
+function reiniciarJogo() {
+  criarTabuleiro();
+  escolherQuadradoCorreto();
+  mostrarSeta("");
 }
 
-restartBtn.onclick = restartGame;
-restartGame();
+// configura o evento do botao
+botaoReiniciar.addEventListener("click", reiniciarJogo);
+
+// inicia o jogo ao clicar em reinicializar
+reiniciarJogo();
