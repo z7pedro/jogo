@@ -5,50 +5,75 @@
 body {
   margin: 0;
   padding: 0;
-  background-color: #f9f9f9;
+  background-color: #f0f0f0;
+  font-family: Arial, sans-serif;
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  font-family: sans-serif;
 }
 
 #container {
   text-align: center;
+  width: max-content;
 }
 
-#board {
-  display: grid;
-  grid-template-columns: repeat(6, 60px);
-  grid-gap: 5px;
-  justify-content: center;
+header {
   margin-bottom: 20px;
 }
 
-.square {
+header h1 {
+  font-size: 2.5rem;
+  color: #333;
+  margin: 0;
+  font-weight: 700;
+  user-select: none;
+}
+
+#tabela {
+  display: grid;
+  grid-template-columns: repeat(6, 60px);
+  gap: 5px;
+  margin-bottom: 20px;
+}
+.quadrado {
   width: 60px;
   height: 60px;
   background-color: #ddd;
   border: 1px solid #aaa;
   cursor: pointer;
+  user-select: none;
+  transition: background-color 0.3s ease;
 }
 
-.square.correct {
+.quadrado.correto {
   background-color: lightgreen;
+  cursor: default;
 }
 
-.square.wrong {
+.quadrado.errado {
   background-color: lightcoral;
+  cursor: default;
 }
 
-#arrowContainer {
+#containerSeta {
   font-size: 50px;
   height: 60px;
   margin-bottom: 20px;
+  user-select: none;
 }
 
-#restartBtn {
+#botaoReiniciar {
   padding: 10px 20px;
   font-size: 16px;
   cursor: pointer;
+  border: none;
+  background-color: #007BFF;
+  color: white;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+#botaoReiniciar:hover {
+  background-color: #0056b3;
 }
